@@ -11,8 +11,11 @@ for link in links:
     organismName = helperFns.getOrganism(link[1]) + ","
     sampleLinks = helperFns.getSampleLinks(link[1])
     print(sampleLinks)
-    for i in range(2,len(sampleLinks) - 1):
+    for i in range(0,len(sampleLinks)):
         sraLink = helperFns.getSRALink(sampleLinks[i])
-        fastDumpCmd = helperFns.getFastDumpLink(sraLink)
-        row = articleText + organismName.replace(",","|")+ "," + fastDumpCmd + '\n'
-        helperFns.appendCSV(filename,row)
+        if(sraLink == None):
+            continue
+        else:
+            fastDumpCmd = helperFns.getFastDumpLink(sraLink)
+            row = articleText + organismName.replace(",","|")+ "," + fastDumpCmd + '\n'
+            helperFns.appendCSV(filename,row)

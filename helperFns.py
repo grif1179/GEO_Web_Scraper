@@ -46,12 +46,12 @@ def getSRALink(sampleLink):
     print('Status code: ' + str(page.status_code))
     soup = BeautifulSoup(page.content,'html.parser')
     containers = soup(text=re.compile('^SRA$'))
-    for container in containers:
-        if(container.parent.find_next_sibling('td') != None):
-            return container.parent.find_next_sibling('td').find('a')['href'];
-    # sraLink = container.find('a')
-    # return sraLink['href'];
-    return;
+    if(len(containers) == 0):
+        return None;
+    else:
+        for container in containers:
+            if(container.parent.find_next_sibling('td') != None):
+                return container.parent.find_next_sibling('td').find('a')['href'];
 
 def getFastDumpLink(sraLink):
     page = requests.get(sraLink)
